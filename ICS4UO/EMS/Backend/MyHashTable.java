@@ -60,17 +60,15 @@ public class MyHashTable {
 		// Remove the employee from the hash table and return the reference to that
 		// employee.
 		// If the employee is not in the hash table, return null.
-
-		EmployeeInfo removeEmployee = removeEmp;
 		int x = calcBucket(removeEmp.getEmpNum());
 		for (int i = 0; i < buckets[x].size(); i++) {
 			if (buckets[x].get(i).getEmpNum() == removeEmp.getEmpNum()) {
 				// removeEmployee = buckets[x].get(i);
 				buckets[x].remove(i);
-				System.out.println("\nEmployee: " + removeEmployee.getEmpNum() + " has been removed");
+				System.out.println("\nEmployee: " + removeEmp.getEmpNum() + " has been removed");
 			}
 		}
-		return removeEmployee;
+		return removeEmp;
 	}
 
 	public int searchByEmployeeNumber(int empNum) { // SEARCH AND LIST EMPLOYEE INFO
