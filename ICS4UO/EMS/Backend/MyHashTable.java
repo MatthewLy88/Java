@@ -69,31 +69,30 @@ public class MyHashTable {
 			}
 		}
 		return removeEmp;
+                
 	}
 
-	public int searchByEmployeeNumber(int empNum) { // SEARCH AND LIST EMPLOYEE INFO
+	public EmployeeInfo searchByEmployeeNumber(int empNum) { // SEARCH AND LIST EMPLOYEE INFO
 
 		// Determine the position of the employee in the ArrayList for the bucket that
 		// employee hashes to.
 		// If the employee is not found, return -1.
 
-		int position = -1;
-		EmployeeInfo empInfo;
+		EmployeeInfo empInfo = null;
 		boolean real = false;
 		int x = calcBucket(empNum);
 		for (int i = 0; i < buckets[x].size(); i++) {
 			if (buckets[x].get(i).getEmpNum() == empNum) {
-				position = i;
 				empInfo = buckets[x].get(i);
-				employeeData(empInfo);
+				//employeeData(empInfo);
 				real = true;
 			}
 
 		}
 		if (real = false) {
-			System.out.println("\nEmployee " + empNum + " doest not exist");
+			//System.out.println("\nEmployee " + empNum + " doest not exist");
 		}
-		return position;
+		return empInfo;
 	}
 
 	public void employeeData(EmployeeInfo myEmp) { // USED BY SEARCH FUNTION PRINTS OUT EMPLOYEE INFO 
@@ -117,7 +116,7 @@ public class MyHashTable {
 		// This method is called every time the hash table is modified.
 		// Replaces all old contents with new contents.
 		try {
-			FileWriter writer = new FileWriter("Database");
+			FileWriter writer = new FileWriter("Database.txt");
 			for (int i = 0; i < buckets.length; i++) {
 				// For the current bucket, print out the empNum for each item in its ArrayList.
 				int listSize = buckets[i].size();
@@ -171,7 +170,7 @@ public class MyHashTable {
 		// Read from text file and add all contents to the hash table.
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader("Database"));
+			reader = new BufferedReader(new FileReader("Database.txt"));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.equals("FT")) {
