@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class MyHashTable {
 
@@ -111,7 +112,46 @@ public class MyHashTable {
 			System.out.println("Yearly Salary is " + fullTimeEmp.getYearlyWage());
 		}
 	}
-	
+        
+        public void writeToFile() {
+           try {
+               PrintWriter writer = new PrintWriter ("Database.txt");
+               for (int i = 0; i < buckets.length; i++) {
+                   int listSize = buckets[i].size();
+                   if (listSize == 0) {
+			System.out.println("  Nothing in its ArrayList!");
+                   } else if (listSize != 0) {
+			for (int j = 0; j < listSize; j++) {
+                           EmployeeInfo someEmployee = buckets[i].get(j);  //Gets employee
+                            if (someEmployee instanceof PartTimeEmployee){
+                              writer.println("Part Time Employee");  //write PART TIME EMPLOYEE
+                           } else if (someEmployee instanceof FullTimeEmployee) {
+                              writer.println("Full Time Employee");
+                           }
+                           writer.println(someEmployee.getEmpNum());  //Write EMPLOYEE NUMBER
+                           writer.println(someEmployee.getFirstName()); //Writes FIRST NAME
+                           writer.println( someEmployee.getLastName()); //Writes LAST NAME
+                           writer.println( someEmployee.getDeductRate()); //Writes DEDUCT RATE
+                           writer.println(someEmployee.getSex()); //Writes GENDER
+                           writer.println( someEmployee.getWorkLoc());  //Writes LOCATION
+                           if (someEmployee instanceof PartTimeEmployee){
+                              writer.println(( (PartTimeEmployee) someEmployee).getHourlyWage()); //Writes HOURLY WAGE
+                              writer.println( ( (PartTimeEmployee) someEmployee).getHoursPerWeek());  //Writes HOURS WORKED PER WEEK
+                              writer.println( ( (PartTimeEmployee) someEmployee).getWeeksPerYear());  //Writes WEEKS WORKED PER WEEK
+                           } else if (someEmployee instanceof FullTimeEmployee) {
+                               writer.println(( (FullTimeEmployee) someEmployee).getYearlyWage());   //Writes YEARLY SALARY                    
+                           }
+                           writer.println("-----------");
+                       }
+                   } 
+		}
+           writer.close();
+           } catch (Exception e) {
+               //JOptionPane.showMessageDialog(null, "File Not Found"); //make sure
+           }
+       }
+        
+	/*
 	public void writeToFile() {
 		// This method is called every time the hash table is modified.
 		// Replaces all old contents with new contents.
@@ -162,7 +202,7 @@ public class MyHashTable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public void readFromFile() {
 		// Call this at the beginning of the test program after the hash table is
@@ -187,10 +227,10 @@ public class MyHashTable {
 					line = reader.readLine();
 					Double deductRate = Double.parseDouble(line);
 					line = reader.readLine();
-					Double yearlySalary = Double.parseDouble(line);
+					Double YearlyWage = Double.parseDouble(line);
 					line = reader.readLine();
 					EmployeeInfo theEmployee = new FullTimeEmployee(empNum, firstName, lastName, sex, workLoc,
-							deductRate, yearlySalary);
+							deductRate, YearlyWage);
 					addEmployee(theEmployee);
 				} else if (line.equals("PT")) {
 					line = reader.readLine();
@@ -230,13 +270,13 @@ public class MyHashTable {
 		// Print the employee numbers for the employees stored in each bucket's
 		// ArrayList,
 		// starting with bucket 0, then bucket 1, and so on.
-
+                System.out.println("These are all the employees in the database:");
+                System.out.println("--------------------------------------------");
 		for (int i = 0; i < buckets.length; i++) {
 
 			// For the current bucket, print out the emp num for each item
 			// in its ArrayList.
 
-			System.out.println("\nExamining the ArrayList for bucket " + i);
 			int listSize = buckets[i].size();
 			if (listSize == 0) {
 				System.out.println("  Nothing in its ArrayList!");
@@ -245,9 +285,22 @@ public class MyHashTable {
 					int theEmpNum = buckets[i].get(j).getEmpNum();
 					String theEmpFName = buckets[i].get(j).getFirstName();
 					String theEmpLName = buckets[i].get(j).getLastName();
-					System.out.println("\n  Employee #: " + theEmpNum);
-					System.out.println("  First Name: " + theEmpFName);
-					System.out.println("  Last Name: " + theEmpLName);
+					String theEmpSex = buckets[i].get(j).getSex();
+                                        String theEmpWorkLoc = buckets[i].get(j).getWorkLoc();
+                                        Double theEmpDeductRate = buckets[i].get(j).getDeductRate();
+                                        
+                                        System.out.println("\n  Employee #: " + theEmpNum);
+					System.out.println("  Their first name is " + theEmpFName);
+					System.out.println("  Their last name is " + theEmpLName);
+                                        System.out.println("  They are a " + theEmpSex);
+                                        System.out.println("  They work in " + theEmpWorkLoc);
+                                        System.out.println("  Their deduct rate is " + theEmpDeductRate + "%");
+                                        //if (Type = "FTE"){
+                                            ;
+                                        //}
+                                        //if (theEmployee instanceof FullTimeEmployee) {
+                                            
+                                        //}
 				}
 			}
 
