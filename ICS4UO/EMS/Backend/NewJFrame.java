@@ -13,15 +13,17 @@ import javax.swing.JOptionPane;
  */
 public class NewJFrame extends javax.swing.JFrame {
 
+    private MyHashTable theHT;
+    
     /**
      * Creates new form NewJFrame
      */
-    MyHashTable theHT = new MyHashTable(2);
     
     public NewJFrame() {
         initComponents();
-        MyHashTable theHT = new MyHashTable(2);
+        theHT = new MyHashTable(2);
         theHT.readFromFile();
+        System.out.println ("");   
     }
 
     /**
@@ -192,6 +194,11 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(60, 72, 84));
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         background.setBackground(new java.awt.Color(60, 72, 84));
         background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
@@ -1664,7 +1671,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        //theHT.readFromFile();
         theHT.writeToFile();
         System.exit(0);
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -1712,6 +1718,17 @@ public class NewJFrame extends javax.swing.JFrame {
         searchedEmployee = theHT.searchByEmployeeNumber(result);
         
         if (searchedEmployee == null) {
+            jTextField15.setText(" ");
+            jTextField19.setText(" ");
+            jTextField18.setText(" ");
+            jTextField20.setText(" ");
+            jTextField22.setText(" ");
+            jTextField16.setText(" ");
+            jTextField17.setText(" ");
+            jTextField23.setText(" ");
+            jTextField21.setText(" ");
+            jTextField27.setText(" ");
+            jTextField24.setText(" ");
             JOptionPane.showMessageDialog(null, "Employee Not found");
         }
         else {
@@ -1738,9 +1755,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 jTextField17.setText(" ");
                 jTextField23.setText(" ");
             }
+            JOptionPane.showMessageDialog(null, "Employee found");
         }
     }
         catch (NumberFormatException e){
+            jTextField15.setText(" ");
+            jTextField19.setText(" ");
+            jTextField18.setText(" ");
+            jTextField20.setText(" ");
+            jTextField22.setText(" ");
+            jTextField16.setText(" ");
+            jTextField17.setText(" ");
+            jTextField23.setText(" ");
+            jTextField21.setText(" ");
+            jTextField27.setText(" ");
+            jTextField24.setText(" ");
             JOptionPane.showMessageDialog(null, "Please Enter an Employee Number");
         }
     jTextField15.setEditable(false);
@@ -2032,6 +2061,11 @@ public class NewJFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Employee Not found");
             }
             else {
+                jTextField31.setText(" ");
+                jTextField32.setText(" ");
+                jTextField33.setText(" ");
+                jTextField34.setText(" ");
+                
                 jTextField25.setText(searchedEmployee.getFirstName());
                 jTextField26.setText(searchedEmployee.getLastName());
                 jTextField29.setText(Double.toString(searchedEmployee.getDeductRate()));
@@ -2132,6 +2166,11 @@ public class NewJFrame extends javax.swing.JFrame {
             jTextField31.setEditable(false);
         }
     }//GEN-LAST:event_pTTypeActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        //theHT.writeToFile();
+    }//GEN-LAST:event_formWindowClosing
 
      int xx, xy;
      
